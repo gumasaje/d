@@ -5,8 +5,8 @@ public class Main{
         Scanner sc = new Scanner(System.in);
         int arr[][] = new int[9][9];
         int max = 0;
-        int n = 0;
-        int m = 0;
+        int n = 1;
+        int m = 1;
         
         for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
@@ -17,11 +17,6 @@ public class Main{
                     m = j+1;
                 }
             }
-        }
-        
-        if(max==0){
-            n = 1;
-            m = 1;
         }
         
         System.out.println(max);
