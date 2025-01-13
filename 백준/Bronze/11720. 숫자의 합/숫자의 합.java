@@ -8,9 +8,8 @@ public class Main{
         sc.close();
         
         int sum = 0;
-        for(int i=0; i<N; i++)
+        for(int i=0; i<str.length(); i++)
             sum += str.charAt(i) - '0';
-        
         System.out.print(sum);
     }
 }
