@@ -1,28 +1,27 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+import java.util.Arrays;
+
 public class Main{
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        
-        int N = sc.nextInt();
-        double arr[] = new double[N];
-        
-        for(int i=0; i<arr.length; i++)
-            arr[i] = sc.nextInt();
-        sc.close();
-        
-        double max = arr[0];
-        for(int i=0; i<arr.length; i++){
-            if(arr[i] > max)
-                max = arr[i];
-        }
-      
-        double sum = 0;
-        for(int i=0; i<arr.length; i++){
-            arr[i] = arr[i]/max*100;
-            sum += arr[i];
-        }
-        
-        double avg = sum/N;
-        System.out.print(avg);
-    }
+	public static void main(String[] args) throws IOException {
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		double arr[] = new double[Integer.parseInt(br.readLine())];
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		for(int i=0; i<arr.length; i++) {
+			arr[i] = Double.parseDouble(st.nextToken());
+		}
+		
+		Arrays.sort(arr);
+		double sum = 0;
+		
+		for(int i=0; i<arr.length; i++) {
+			sum += arr[i]/arr[arr.length-1]*100;
+		}
+		System.out.print(sum/arr.length);
+	}
 }
