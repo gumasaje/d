@@ -1,27 +1,29 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
 public class Main{
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        int H = sc.nextInt();
-        int M = sc.nextInt();
-        sc.close();
-        
-        if(H==0){
-            if(M<45){
-                H = H+24-1;
-                M = M+60-45;
-            }
-            else
-                M = M-45;
-        }
-        else{
-            if(M<45){
-                H = H-1;
-                M = M+60-45;
-            }
-            else
-                M = M-45;
-        }
-        System.out.print(H+" "+M);
-    }
+	public static void main(String[] args) throws IOException {
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		int H = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+		
+		if(M<45) {
+			M += 15;
+			if(H==0)
+				H = 23;
+			else
+				H -= 1;
+		}
+		
+		else
+			M -= 45;
+		
+		System.out.print(H+" "+M);
+		
+	}
 }
