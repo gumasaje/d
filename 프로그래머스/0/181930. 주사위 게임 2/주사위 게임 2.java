@@ -1,21 +1,12 @@
 class Solution {
     public int solution(int a, int b, int c) {
-        int answer = 0;
+        int answer = a + b + c;
 
-        if(a != b) {
-            if (a != c && b != c) {
-                answer = a + b + c;
-            }
-            else if (b == c || a == c) {
-                answer = (a + b + c) * (a*a + b*b + c*c);
-            }
+        if (a == b && b == c) {
+            answer = answer * (a * a + b * b + c * c) * (a * a * a + b * b * b + c * c * c);
+        } else if (a == b || a == c || b == c) {
+            answer = answer * (a * a + b * b + c * c);
         }
-        else if(a == b && a == c) {
-            answer = (a + b + c) * (a*a + b*b + c*c) * (a*a*a + b*b*b + c*c*c);
-        }
-        
-        else
-            answer = (a + b + c) * (a*a + b*b + c*c);
         return answer;
     }
 }
