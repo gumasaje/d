@@ -2,16 +2,13 @@ class Solution {
     boolean solution(String s) {
 
         s = s.toLowerCase();
-
-        int pCount = 0;
-        int yCount = 0;
+        int count = 0;
 
         for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == 'p') pCount++;
-            else if (c == 'y') yCount++;
+            if (s.charAt(i) == 'p') count++;
+            else if (s.charAt(i) == 'y') count--;
         }
-        
-        return pCount == yCount;
+
+        return count == 0;
     }
 }
