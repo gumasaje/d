@@ -11,17 +11,14 @@ class Solution {
                 sb.append(c);
             } else {
                 if (index % 2 == 0) {
-                    c = Character.toUpperCase(c);
-                    sb.append(c);
-                    index++;
+                    sb.append(Character.toUpperCase(c));
                 } else {
-                    c = Character.toLowerCase(c);
-                    sb.append(c);
-                    index++;
+                    sb.append(Character.toLowerCase(c));
                 }
+                index++;
             }
         }
-        
+
         return sb.toString();
     }
 }
