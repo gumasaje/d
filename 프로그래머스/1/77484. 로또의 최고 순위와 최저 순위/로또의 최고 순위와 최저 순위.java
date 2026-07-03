@@ -5,24 +5,27 @@ class Solution {
         int zeroCount = 0;
 
         for (int i : lottos) {
-            if (i == 0)
+            if (i == 0) {
                 zeroCount++;
+                continue;
+            }
             for (int j : win_nums) {
                 if (i == j)
                     count++;
             }
         }
+        
+        int maxMatch = count + zeroCount;
+        int minMatch = count;
 
-        answer[0] = rank(count + zeroCount);
-        answer[1] = rank(count);
+        answer[0] = rank(maxMatch);
+        answer[1] = rank(minMatch);
 
 
         return answer;
     }
 
     private int rank(int count) {
-        if (count == 0)
-            return 6;
-        return 7 - count;
+        return count == 0 ? 6 : 7 - count;
     }
 }
