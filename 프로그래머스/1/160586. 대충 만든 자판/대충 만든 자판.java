@@ -12,18 +12,21 @@ class Solution {
             }
         }
 
-        int index = 0;
-        for (String target : targets) {
+        for (int i = 0; i < targets.length; i++) {
             int count = 0;
-            for (int i = 0; i < target.length(); i++) {
-                if (map.containsKey(target.charAt(i))) {
-                    count += map.get(target.charAt(i));
-                } else {
+
+            for (int j = 0; j < targets[i].length(); j++) {
+                Integer pressCount = map.get(targets[i].charAt(j));
+
+                if (pressCount == null) {
                     count = -1;
                     break;
                 }
+
+                count += pressCount;
             }
-            answer[index++] = count;
+
+            answer[i] = count;
         }
 
         return answer;
