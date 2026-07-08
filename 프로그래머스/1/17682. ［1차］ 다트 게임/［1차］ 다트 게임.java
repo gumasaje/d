@@ -7,36 +7,41 @@ class Solution {
         int round = 0;
 
         while (i < dartResult.length()) {
-            if (dartResult.charAt(i) == '1' && dartResult.charAt(i + 1) == '0') {
-                score[round] += 10;
+            if (i + 1 < dartResult.length() && dartResult.charAt(i) == '1' && dartResult.charAt(i + 1) == '0') {
+                score[round] = 10;
                 i += 2;
             } else {
-                score[round] += dartResult.charAt(i) - '0';
+                score[round] = dartResult.charAt(i) - '0';
                 i++;
             }
 
-            switch (dartResult.charAt(i)) {
+            char bonus = dartResult.charAt(i);
+            switch (bonus) {
                 case 'D' -> score[round] = score[round] * score[round];
                 case 'T' -> score[round] = score[round] * score[round] * score[round];
             }
             i++;
 
-            if (i < dartResult.length() && (dartResult.charAt(i) == '*' || dartResult.charAt(i) == '#')) {
-                if (dartResult.charAt(i) == '*') {
-                    score[round] *= 2;
-                    if (round > 0) score[round - 1] *= 2;
-                } else if (dartResult.charAt(i) == '#') {
-                    score[round] *= -1;
+            if (i < dartResult.length()) {
+                char option = dartResult.charAt(i);
+
+                switch (option) {
+                    case '*' -> {
+                        score[round] *= 2;
+                        if (round > 0) score[round - 1] *= 2;
+                        i++;
+                    }
+                    case '#' -> {
+                        score[round] *= -1;
+                        i++;
+                    }
                 }
-                i++;
             }
 
             round++;
         }
 
-        for (i = 0; i < score.length; i++) {
-            answer += score[i];
-        }
+        for (int s : score) answer += s;
 
         return answer;
     }
