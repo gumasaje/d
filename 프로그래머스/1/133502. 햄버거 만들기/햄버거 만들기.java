@@ -2,25 +2,23 @@ class Solution {
     public int solution(int[] ingredient) {
         int answer = 0;
 
-        int[] arr = new int[ingredient.length];
-        int pointer = 0;
+        int[] stack = new int[ingredient.length];
+        int top = 0;
 
         for (int i = 0; i < ingredient.length; i++) {
-            arr[pointer++] = ingredient[i];
+            stack[top++] = ingredient[i];
 
-            if (pointer >= 4) {
-                if (arr[pointer - 1] == 1) {
-                    if (arr[pointer - 2] == 3) {
-                        if (arr[pointer - 3] == 2) {
-                            if (arr[pointer - 4] == 1) {
-                                pointer -= 4;
-                                answer++;
-                            }
-                        }
-                    }
-                }
+            if (top >= 4
+                    && stack[top - 1] == 1
+                    && stack[top - 2] == 3
+                    && stack[top - 3] == 2
+                    && stack[top - 4] == 1) {
+                top -= 4;
+                answer++;
             }
+
         }
+        
         return answer;
     }
 }
