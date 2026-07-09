@@ -1,31 +1,26 @@
-import java.util.HashMap;
-import java.util.Map;
-
 class Solution {
     public String solution(String X, String Y) {
         StringBuilder answer = new StringBuilder();
 
-        Map<Character, Integer> xMap = new HashMap<>();
-        Map<Character, Integer> yMap = new HashMap<>();
+        int[] xCount = new int[10];
+        int[] yCount = new int[10];
 
         for (char c : X.toCharArray()) {
-            xMap.put(c, xMap.getOrDefault(c, 0) + 1);
+            int num = c - '0';
+            xCount[num]++;
         }
 
         for (char c : Y.toCharArray()) {
-            yMap.put(c, yMap.getOrDefault(c, 0) + 1);
+            int num = c - '0';
+            yCount[num]++;
         }
-
-
+        
         for (int i = 9; i >= 0; i--) {
-            char digitChar = (char) (i + '0');
-
-            int xCount = xMap.getOrDefault(digitChar, 0);
-            int yCount = yMap.getOrDefault(digitChar, 0);
-
-            int count = Math.min(xCount, yCount);
-
-            answer.repeat(String.valueOf(i), Math.max(0, count));
+            int count = Math.min(xCount[i], yCount[i]);
+            
+            for (int j = 0; j < count; j++) {
+                answer.append(i);
+            }
         }
 
         if (answer.isEmpty()) return "-1";
