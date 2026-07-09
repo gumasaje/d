@@ -18,13 +18,7 @@ class Solution {
 
         filteredRows.sort(Comparator.comparingInt(row -> row[sortIndex]));
 
-        int[][] answer = new int[filteredRows.size()][data[0].length];
-
-        for (int i = 0; i < filteredRows.size(); i++) {
-            answer[i] = filteredRows.get(i);
-        }
-
-        return answer;
+        return filteredRows.toArray(new int[filteredRows.size()][]);
     }
 
     private int getIndex(String column) {
