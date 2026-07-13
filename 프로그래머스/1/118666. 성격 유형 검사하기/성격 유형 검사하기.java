@@ -1,33 +1,31 @@
-import java.util.HashMap;
-import java.util.Map;
-
 class Solution {
     public String solution(String[] survey, int[] choices) {
-        Map<Character, Integer> map = new HashMap<>();
+        int[] scores = new int[26];
 
         for (int i = 0; i < survey.length; i++) {
-            char c1 = survey[i].charAt(0);
-            char c2 = survey[i].charAt(1);
+            char first = survey[i].charAt(0);
+            char second = survey[i].charAt(1);
             int choice = choices[i];
 
-            if (choice < 4) map.merge(c1, 4 - choice, Integer::sum);
-            else if (choice > 4) map.merge(c2, choice - 4, Integer::sum);
+            if (choice < 4) {
+                scores[first - 'A'] += 4 - choice;
+            } else if (choice > 4) {
+                scores[second - 'A'] += choice - 4;
+            }
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder answer = new StringBuilder(4);
+        answer.append(compare(scores, 'R', 'T'));
+        answer.append(compare(scores, 'C', 'F'));
+        answer.append(compare(scores, 'J', 'M'));
+        answer.append(compare(scores, 'A', 'N'));
 
-        sb.append(compare(map, 'R', 'T'));
-        sb.append(compare(map, 'C', 'F'));
-        sb.append(compare(map, 'J', 'M'));
-        sb.append(compare(map, 'A', 'N'));
-
-        return sb.toString();
+        return answer.toString();
     }
 
-    private char compare(Map<Character, Integer> map, char a, char b) {
-        int scoreA = map.getOrDefault(a, 0);
-        int scoreB = map.getOrDefault(b, 0);
-
-        return scoreA >= scoreB ? a : b;
+    private char compare(int[] scores, char first, char second) {
+        return scores[first - 'A'] >= scores[second - 'A']
+                ? first
+                : second;
     }
 }
