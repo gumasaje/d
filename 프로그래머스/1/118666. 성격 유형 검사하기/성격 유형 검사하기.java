@@ -10,15 +10,24 @@ class Solution {
             char c2 = survey[i].charAt(1);
             int choice = choices[i];
 
-            if (choice < 4) map.put(c1, map.getOrDefault(c1, 0) + 4 - choice);
-            if (choice > 4) map.put(c2, map.getOrDefault(c2, 0) + choice - 4);
+            if (choice < 4) map.merge(c1, 4 - choice, Integer::sum);
+            else if (choice > 4) map.merge(c2, choice - 4, Integer::sum);
         }
 
-        String answer = String.valueOf(map.getOrDefault('R', 0) >= map.getOrDefault('T', 0) ? 'R' : 'T') +
-                (map.getOrDefault('C', 0) >= map.getOrDefault('F', 0) ? 'C' : 'F') +
-                (map.getOrDefault('J', 0) >= map.getOrDefault('M', 0) ? 'J' : 'M') +
-                (map.getOrDefault('A', 0) >= map.getOrDefault('N', 0) ? 'A' : 'N');
+        StringBuilder sb = new StringBuilder();
 
-        return answer;
+        sb.append(compare(map, 'R', 'T'));
+        sb.append(compare(map, 'C', 'F'));
+        sb.append(compare(map, 'J', 'M'));
+        sb.append(compare(map, 'A', 'N'));
+
+        return sb.toString();
+    }
+
+    private char compare(Map<Character, Integer> map, char a, char b) {
+        int scoreA = map.getOrDefault(a, 0);
+        int scoreB = map.getOrDefault(b, 0);
+
+        return scoreA >= scoreB ? a : b;
     }
 }
