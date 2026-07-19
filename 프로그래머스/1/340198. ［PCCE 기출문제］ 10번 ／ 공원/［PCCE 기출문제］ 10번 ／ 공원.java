@@ -4,32 +4,31 @@ class Solution {
     public int solution(int[] mats, String[][] park) {
         Arrays.sort(mats);
 
-        int rows = park.length;
-        int cols = park[0].length;
+        int height = park.length;
+        int width = park[0].length;
 
         for (int i = mats.length - 1; i >= 0; i--) {
             int size = mats[i];
 
-            if (size > rows || size > cols) continue;
-
-            for (int r = 0; r <= rows - size; r++) {
-                for (int c = 0; c <= cols - size; c++) {
-                    boolean canPlace = true;
-
-                    for (int y = r; y < r + size && canPlace; y++) {
-                        for (int x = c; x < c + size; x++) {
-                            if (!park[y][x].equals("-1")) {
-                                canPlace = false;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (canPlace) return size;
+            for (int row = 0; row + size <= height; row++) {
+                for (int col = 0; col + size <= width; col++) {
+                    if (canPlace(park, row, col, size)) return size;
                 }
             }
         }
 
         return -1;
+    }
+
+    private boolean canPlace(String[][] park, int startRow, int startCol, int size) {
+        for (int row = startRow; row < startRow + size; row++) {
+            for (int col = startCol; col < startCol + size; col++) {
+                if (!park[row][col].equals("-1")) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
