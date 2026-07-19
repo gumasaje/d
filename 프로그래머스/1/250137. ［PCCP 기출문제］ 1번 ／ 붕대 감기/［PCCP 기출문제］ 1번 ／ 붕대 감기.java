@@ -1,28 +1,23 @@
 class Solution {
     public int solution(int[] bandage, int health, int[][] attacks) {
         int currentHealth = health;
-        int continuous = 0;
-        int attackIndex = 0;
+        int previousAttackTime = 0;
 
-        for (int time = 1; time <= attacks[attacks.length - 1][0]; time++) {
-            if (time == attacks[attackIndex][0]) {
-                currentHealth -= attacks[attackIndex][1];
-                continuous = 0;
+        for (int[] attack : attacks) {
+            int attackTime = attack[0];
+            int damage = attack[1];
 
-                if (currentHealth <= 0) return -1;
+            int recoveryTime = attackTime - previousAttackTime - 1;
 
-                attackIndex++;
-            } else {
-                currentHealth += bandage[1];
-                continuous++;
+            currentHealth += recoveryTime * bandage[1];
+            currentHealth += (recoveryTime / bandage[0]) * bandage[2];
+            currentHealth = Math.min(currentHealth, health);
 
-                if (continuous == bandage[0]) {
-                    currentHealth += bandage[2];
-                    continuous = 0;
-                }
+            currentHealth -= damage;
 
-                currentHealth = Math.min(currentHealth, health);
-            }
+            if (currentHealth <= 0) return -1;
+
+            previousAttackTime = attackTime;
         }
 
         return currentHealth;
