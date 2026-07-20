@@ -1,22 +1,15 @@
 class Solution {
     public String solution(String video_len, String pos, String op_start, String op_end, String[] commands) {
         int videoLength = toSeconds(video_len);
-        int position = toSeconds(pos);
+        int currentPosition = toSeconds(pos);
         int openingStart = toSeconds(op_start);
         int openingEnd = toSeconds(op_end);
 
-        int currentPosition = moveAfterOpening(position, openingStart, openingEnd);
+        currentPosition = moveAfterOpening(currentPosition, openingStart, openingEnd);
 
         for (String command : commands) {
-            if (command.equals("prev")) {
-                currentPosition -= 10;
-
-                if (currentPosition < 0) currentPosition = 0;
-            } else if (command.equals("next")) {
-                currentPosition += 10;
-
-                if (currentPosition > videoLength) currentPosition = videoLength;
-            }
+            if (command.equals("prev")) currentPosition = Math.max(0, currentPosition - 10);
+            else if (command.equals("next")) currentPosition = Math.min(videoLength, currentPosition + 10);
 
             currentPosition = moveAfterOpening(currentPosition, openingStart, openingEnd);
         }
@@ -25,21 +18,16 @@ class Solution {
     }
 
     private int toSeconds(String time) {
-        String[] time_array = time.split(":");
-        return Integer.parseInt(time_array[0]) * 60 + Integer.parseInt(time_array[1]);
+        String[] timeParts = time.split(":");
+
+        return Integer.parseInt(timeParts[0]) * 60 + Integer.parseInt(timeParts[1]);
     }
 
-    private int moveAfterOpening(int pos, int op_start, int op_end) {
-        return op_start <= pos && pos <= op_end ? op_end : pos;
+    private int moveAfterOpening(int position, int openingStart, int openingEnd) {
+        return openingStart <= position && position <= openingEnd ? openingEnd : position;
     }
 
-    private String toTimeString(int pos) {
-        String minute = String.valueOf(pos / 60);
-        String second = String.valueOf(pos % 60);
-
-        if (minute.length() == 1) minute = "0" + minute;
-        if (second.length() == 1) second = "0" + second;
-
-        return minute + ":" + second;
+    private String toTimeString(int position) {
+        return String.format("%02d:%02d", position / 60, position % 60);
     }
 }
