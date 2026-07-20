@@ -8,26 +8,27 @@ class Solution {
         int[] answer = new int[id_list.length];
 
         Map<String, Integer> indexMap = new HashMap<>();
+        Map<String, Set<String>> reportHistory = new HashMap<>();
         Map<String, Integer> reportCount = new HashMap<>();
-        Set<String> uniqueReports = new HashSet<>();
 
-        for (int i = 0; i < id_list.length; i++) indexMap.put(id_list[i], i);
-
-        for (String reportInfo : report) uniqueReports.add(reportInfo);
-
-        for (String reportInfo : uniqueReports) {
-            String[] users = reportInfo.split(" ");
-            String reportedUser = users[1];
-
-            reportCount.merge(reportedUser, 1, Integer::sum);
+        for (int i = 0; i < id_list.length; i++) {
+            indexMap.put(id_list[i], i);
+            reportHistory.put(id_list[i], new HashSet<>());
         }
 
-        for (String reportInfo : uniqueReports) {
+        for (String reportInfo : report) {
             String[] users = reportInfo.split(" ");
             String reporter = users[0];
             String reportedUser = users[1];
 
-            if (reportCount.getOrDefault(reportedUser, 0) >= k) answer[indexMap.get(reporter)]++;
+            Set<String> reportedUsers = reportHistory.get(reporter);
+
+            if (reportedUsers.add(reportedUser)) reportCount.merge(reportedUser, 1, Integer::sum);
+        }
+
+        for (String reporter : id_list) {
+            for (String reportedUser : reportHistory.get(reporter))
+                if (reportCount.getOrDefault(reportedUser, 0) >= k) answer[indexMap.get(reporter)]++;
         }
 
         return answer;
