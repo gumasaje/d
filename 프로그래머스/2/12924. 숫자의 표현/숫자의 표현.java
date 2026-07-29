@@ -2,28 +2,17 @@ class Solution {
     public int solution(int n) {
         int answer = 0;
 
-        int start = 1;
-        int end = 1;
-        int sum = 1;
+        int divisor = 1;
 
-        while (start <= n) {
-            if (sum == n) {
-                answer++;
+        while (divisor * divisor <= n) {
+            if (n % divisor == 0) {
+                int pairedDivisor = n / divisor;
 
-                sum -= start;
-                start++;
-            } else if (sum < n) {
-                end++;
-
-                if (end > n) break;
-
-                sum += end;
-            } else {
-                sum -= start;
-                start++;
+                if (divisor % 2 != 0) answer++;
+                if (pairedDivisor % 2 != 0 && pairedDivisor != divisor) answer++;
             }
+            divisor++;
         }
-
         return answer;
     }
 }
