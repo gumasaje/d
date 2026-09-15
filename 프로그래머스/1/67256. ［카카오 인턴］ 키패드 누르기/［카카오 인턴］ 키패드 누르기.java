@@ -11,30 +11,22 @@ class Solution {
                     answer.append("L");
                     left = number;
                 }
-
                 case 3, 6, 9 -> {
                     answer.append("R");
                     right = number;
                 }
-
                 default -> {
                     int leftDistance = calculateDistance(left, number);
                     int rightDistance = calculateDistance(right, number);
 
-                    if (leftDistance < rightDistance) {
+                    boolean useLeft = leftDistance < rightDistance || (leftDistance == rightDistance && hand.equals("left"));
+
+                    if (useLeft) {
                         answer.append("L");
                         left = number;
-                    } else if (rightDistance < leftDistance) {
+                    } else {
                         answer.append("R");
                         right = number;
-                    } else {
-                        if (hand.equals("left")) {
-                            answer.append("L");
-                            left = number;
-                        } else {
-                            answer.append("R");
-                            right = number;
-                        }
                     }
                 }
             }
