@@ -1,31 +1,24 @@
 class Solution {
     public String solution(String m, String[] musicinfos) {
-        String normalizedM = normalize(m);
+        String targetMelody = normalize(m);
 
         String answerTitle = "(None)";
-        int answerPlayTime = -1;
+        int longestPlayTime = -1;
 
         for (String musicinfo : musicinfos) {
             String[] music = musicinfo.split(",");
 
-            int start = calculateTime(music[0]);
-            int end = calculateTime(music[1]);
-            int playTime = end - start;
+            int startTime = calculateTime(music[0]);
+            int endTime = calculateTime(music[1]);
+            int playTime = endTime - startTime;
 
             String title = music[2];
-            String notes = normalize(music[3]);
+            String melody = normalize(music[3]);
+            String playedMelody = createdPlayedMelody(melody, playTime);
 
-            StringBuilder playedNotes = new StringBuilder(notes.repeat(playTime / notes.length()));
-
-            for (int i = 0; i < playTime % notes.length(); i++) {
-                playedNotes.append(notes.charAt(i));
-            }
-
-            if (playedNotes.toString().contains(normalizedM)) {
-                if (playTime > answerPlayTime) {
-                    answerTitle = title;
-                    answerPlayTime = playTime;
-                }
+            if (playedMelody.contains(targetMelody) && playTime > longestPlayTime) {
+                answerTitle = title;
+                longestPlayTime = playTime;
 
             }
         }
@@ -46,5 +39,15 @@ class Solution {
                 .replace("F#", "f")
                 .replace("G#", "g")
                 .replace("A#", "a");
+    }
+
+    private String createdPlayedMelody(String melody, int playTime) {
+        StringBuilder playedMelody = new StringBuilder();
+
+        for (int i = 0; i < playTime; i++) {
+            playedMelody.append(melody.charAt(i % melody.length()));
+        }
+
+        return playedMelody.toString();
     }
 }
