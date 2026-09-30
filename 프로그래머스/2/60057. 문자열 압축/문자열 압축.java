@@ -5,35 +5,35 @@ class Solution {
         for (int unit = 1; unit <= s.length() / 2; unit++) {
             String previous = s.substring(0, unit);
             int count = 1;
+            int compressedLength = 0;
 
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = unit; i < s.length(); i += unit) {
-                String current = s.substring(i, Math.min(i + unit, s.length()));
+            for (int start = unit; start < s.length(); start += unit) {
+                String current = s.substring(start, Math.min(start + unit, s.length()));
 
                 if (previous.equals(current)) {
                     count++;
                 } else {
-                    if (count == 1) {
-                        sb.append(previous);
-                    } else {
-                        sb.append(count).append(previous);
-                    }
-
+                    compressedLength = addCompressedLength(compressedLength, count, previous);
                     previous = current;
                     count = 1;
                 }
             }
 
-            if (count == 1) {
-                sb.append(previous);
-            } else {
-                sb.append(count).append(previous);
-            }
+            compressedLength = addCompressedLength(compressedLength, count, previous);
 
-            answer = Math.min(answer, sb.length());
+            answer = Math.min(answer, compressedLength);
         }
 
         return answer;
+    }
+
+    private int addCompressedLength(int length, int count, String chunk) {
+        if (count > 1) {
+            length += String.valueOf(count).length();
+        }
+        
+        length += chunk.length();
+
+        return length;
     }
 }
