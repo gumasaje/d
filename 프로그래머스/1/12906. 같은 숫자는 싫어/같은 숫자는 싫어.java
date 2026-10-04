@@ -2,17 +2,18 @@ import java.util.*;
 
 public class Solution {
     public int[] solution(int[] arr) {
-        ArrayDeque<Integer> q = new ArrayDeque<>();
+        Deque<Integer> deque = new ArrayDeque<>();
 
         for (int i : arr) {
-            if (q.isEmpty() || q.peekLast() != i) {
-                q.offer(i);
+            if (deque.isEmpty() || deque.peekLast() != i) {
+                deque.offer(i);
             }
         }
 
-        int[] answer = new int[q.size()];
+        int[] answer = new int[deque.size()];
+
         for (int i = 0; i < answer.length; i++) {
-            answer[i] = q.poll();
+            answer[i] = deque.poll();
         }
 
         return answer;
