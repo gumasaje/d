@@ -1,19 +1,19 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 class Solution {
     boolean solution(String s) {
-        Deque<Character> stack = new ArrayDeque<>();
+        int balance = 0;
 
-        for (char c : s.toCharArray()) {
-            if (c == '(') stack.push(c);
-            else if (c == ')') {
-                if (stack.isEmpty()) return false;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                balance++;
+            } else if (s.charAt(i) == ')') {
+                balance--;
 
-                stack.pop();
+                if (balance < 0) {
+                    return false;
+                }
             }
         }
 
-        return stack.isEmpty();
+        return balance == 0;
     }
 }
