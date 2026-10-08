@@ -5,9 +5,12 @@ class Solution {
     public int solution(String s) {
         Deque<Character> stack = new ArrayDeque<>();
 
-        for (char c : s.toCharArray()) {
-            if (!stack.isEmpty() && stack.peek() == c) stack.pop();
-            else stack.push(c);
+        for (int i = 0; i < s.length(); i++) {
+            if (!stack.isEmpty() && stack.peek() == s.charAt(i)) {
+                stack.pop();
+            } else {
+                stack.push(s.charAt(i));
+            }
         }
 
         return stack.isEmpty() ? 1 : 0;
