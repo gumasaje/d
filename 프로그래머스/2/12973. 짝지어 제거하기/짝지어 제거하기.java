@@ -6,10 +6,10 @@ class Solution {
         Deque<Character> stack = new ArrayDeque<>();
 
         for (int i = 0; i < s.length(); i++) {
-            if (!stack.isEmpty() && stack.peek() == s.charAt(i)) {
-                stack.pop();
-            } else {
+            if (stack.isEmpty() || s.charAt(i) != stack.peek()) {
                 stack.push(s.charAt(i));
+            } else {
+                stack.pop();
             }
         }
 
