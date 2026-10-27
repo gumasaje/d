@@ -16,7 +16,7 @@ class Solution {
             boolean hasHigherPriority = false;
 
             for (int index : queue) {
-                if (priorities[index] > priorities[current]) {
+                if (priorities[current] < priorities[index]) {
                     hasHigherPriority = true;
                     break;
                 }
