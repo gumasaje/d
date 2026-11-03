@@ -3,28 +3,32 @@ import java.util.Map;
 
 class Solution {
     public int solution(String[] want, int[] number, String[] discount) {
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Integer> target = new HashMap<>();
 
         for (int i = 0; i < want.length; i++) {
-            map.put(want[i], number[i]);
+            target.put(want[i], number[i]);
         }
 
-        int index = 0;
-        int answer = 0;
+        Map<String, Integer> window = new HashMap<>();
 
-        while (index < discount.length - 9) {
+        for (int i = 0; i < 10; i++) {
+            window.merge(discount[i], 1, Integer::sum);
+        }
 
-            Map<String, Integer> map2 = new HashMap<>();
-            
-            for (int i = index; i < 10 + index; i++) {
-                map2.put(discount[i], map2.getOrDefault(discount[i], 0) + 1);
-            }
+        int answer = target.equals(window) ? 1 : 0;
 
-            if (map.equals(map2)) {
+        for (int i = 10; i < discount.length; i++) {
+            String removed =  discount[i - 10];
+            String added = discount[i];
+
+            window.compute(removed, (key, count) ->
+                    count == 1 ? null : count - 1);
+
+            window.merge(added, 1, Integer::sum);
+
+            if (target.equals(window)) {
                 answer++;
             }
-
-            index++;
         }
 
         return answer;
