@@ -5,14 +5,14 @@ class Solution {
     public int solution(String[][] clothes) {
         Map<String, Integer> map = new HashMap<>();
 
-        for (String[] cloth : clothes) {
-            map.put(cloth[1], map.getOrDefault(cloth[1], 0) + 1);
+        for (String[] clothe : clothes) {
+            map.put(clothe[1], map.getOrDefault(clothe[1], 0) + 1);
         }
 
         int answer = 1;
 
-        for (int count : map.values()) {
-            answer *= (count + 1);
+        for (int i : map.values()) {
+            answer *= i + 1;
         }
 
         return answer - 1;
