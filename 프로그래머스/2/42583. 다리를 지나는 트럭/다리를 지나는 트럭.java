@@ -18,8 +18,8 @@ class Solution {
             currentWeight -= bridge.poll();
 
             if (currentWeight + truck_weights[index] <= weight) {
-                bridge.offer(truck_weights[index]);
                 currentWeight += truck_weights[index];
+                bridge.offer(truck_weights[index]);
                 index++;
             } else {
                 bridge.offer(0);
