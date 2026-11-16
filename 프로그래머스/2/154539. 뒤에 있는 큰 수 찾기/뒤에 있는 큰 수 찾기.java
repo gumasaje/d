@@ -13,7 +13,7 @@ class Solution {
             while (!stack.isEmpty() && numbers[stack.peek()] < numbers[i]) {
                 answer[stack.pop()] = numbers[i];
             }
-            
+
             stack.push(i);
         }
 
