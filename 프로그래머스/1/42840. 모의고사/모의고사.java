@@ -3,9 +3,9 @@ import java.util.List;
 
 class Solution {
     public int[] solution(int[] answers) {
-        int[] first = new int[]{1, 2, 3, 4, 5};
-        int[] second = new int[]{2, 1, 2, 3, 2, 4, 2, 5};
-        int[] third = new int[]{3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+        int[] first = {1, 2, 3, 4, 5};
+        int[] second = {2, 1, 2, 3, 2, 4, 2, 5};
+        int[] third = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
 
         int[] scores = new int[3];
 
@@ -23,8 +23,6 @@ class Solution {
             if (scores[i] == max) list.add(i + 1);
         }
 
-        return list.stream()
-                .mapToInt(Integer::intValue)
-                .toArray();
+        return list.stream().mapToInt(Integer::intValue).toArray();
     }
 }
